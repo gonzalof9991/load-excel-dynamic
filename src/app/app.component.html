@@ -5,8 +5,8 @@
     </span>
   </div>
   <hr class="my-4">
-  <div class="w-full flex justify-center items-center">
-    <button mat-raised-button color="primary" >
+  <div class="flex justify-center items-center">
+    <button mat-raised-button  color="primary" >
       <label for="file-upload" class="flex justify-between items-center gap-2">
         <mat-icon>cloud_upload</mat-icon>
         <span>Upload</span>
@@ -15,8 +15,13 @@
       <input id="file-upload" [disabled]="showSpinner" type="file" (change)="listening($event)">
     </button>
   </div>
+
   <hr class="my-4">
   <div class="shadow-lg" [hidden]="table.dataSource.data.length === 0 || showSpinner">
+    <mat-form-field class="w-full">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
+    </mat-form-field>
     <mat-table
       [dataSource]="table.dataSource"
       matSort

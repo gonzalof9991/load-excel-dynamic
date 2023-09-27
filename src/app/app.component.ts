@@ -24,6 +24,11 @@ export class AppComponent implements OnInit, AfterViewInit{
     this.table.setPaginator(this.paginator);
   }
 
+  public applyFilter(event: any): void{
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.table.filter(filterValue);
+  }
+
   public async listening(event: any): Promise<void> {
     // @ts-ignore
     const file = (event.target as HTMLInputElement).files[0] || null;
@@ -39,12 +44,11 @@ export class AppComponent implements OnInit, AfterViewInit{
     const contentUint8Array = new Uint8Array(contentBuffer);
     const workbook = XLSX.read(contentUint8Array, {type: 'array'});
     const ws = workbook.Sheets[workbook.SheetNames[0]];
-    const newArray = XLSX.utils.sheet_to_json(ws, {
-    });
+    const newArray = XLSX.utils.sheet_to_json(ws);
     const fileHeader = newArray[0] as JSON;
     this.table.columns = Object.keys(fileHeader);
     this.table.load(newArray);
-    this.table.filter('key');
+    this.table.filter('');
     this.table.setPaginator(this.paginator);
     this.table.setSort(this.sort);
   }
